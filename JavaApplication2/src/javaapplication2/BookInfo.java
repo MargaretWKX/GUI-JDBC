@@ -17,11 +17,13 @@ class BookInfo {
     String PressDate;
     String Status;
      public void getBookInfo(Vector vBook){
+         if(!vBook.isEmpty()){
         BookID=vBook.get(0).toString();
         BookName=vBook.get(1).toString();
         Author=vBook.get(2).toString();
         Press=vBook.get(3).toString();
         PressDate=vBook.get(4).toString();
         Status=vBook.get(5).toString();
+         }
     }
 }

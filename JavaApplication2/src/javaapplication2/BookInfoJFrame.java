@@ -26,13 +26,14 @@ public class BookInfoJFrame extends javax.swing.JFrame {
     JTableHeader jTableHeader1 = tbl.getTableHeader();
     int index=0;
     int type=1;
+    
     public BookInfoJFrame() {
         initComponents();
-        tbl.setBounds(new Rectangle(12,65,375,163));
-        jTableHeader1.setBounds(new Rectangle(12, 42,375,22));
+        tbl.setBounds(new Rectangle(3,250,500,100));
+        jTableHeader1.setBounds(new Rectangle(3,220,500,30));
         getContentPane().add(jTableHeader1);
         getContentPane().add(tbl);
-        showTextFieldData(0);
+        showTextFieldData(1);
         showTableData();
        // tbl.addMouseListener(new java.awt.event.MouseAdapter() {
         //    public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -41,23 +42,34 @@ public class BookInfoJFrame extends javax.swing.JFrame {
        // });
     }
 public void showTextFieldData(int index){
-        data=DBCon.queryData("Select * from BookInfo");
+        data=DBCon.queryData("use BookDB Select * from Book");
         if(data.size()>0){
             BookInfo b1 = new BookInfo();
             Vector vBo= (Vector) data.get(index);
+            Vector line = (Vector) data.get(type);
+            if(!line.isEmpty()){
+            ID.setText(line.get(0).toString());
+            name.setText(line.get(1).toString());
+            author.setText(line.get(2).toString());
+            press.setText(line.get(3).toString());
+            pressdate.setText(line.get(4).toString());
             b1.getBookInfo(vBo);
-            jTextField1.setText(b1.BookID);
-            jTextField2.setText(b1.BookName);
+            ID.setText(b1.BookID);
+            name.setText(b1.BookName);
+            author.setText(b1.Author);
+            press.setText(b1.Press);
+            pressdate.setText(b1.PressDate);
             
-            if (b1.Status.equals("在库")) {
-                jRadioButton1.setSelected(true);
+            if (line.get(5).toString().equals("在库")) {
+                in.setSelected(true);
             } else {
-                jRadioButton2.setSelected(true);
+                out.setSelected(true);
             }
-            jTextField3.setText(b1.Author);
+            author.setText(b1.Author);
         }else{ 
             clearAll();
             JOptionPane.showMessageDialog(null,"没有数据","警告", JOptionPane.INFORMATION_MESSAGE);
+        }
         }
         lock();
     }
@@ -68,44 +80,44 @@ public void showTableData(){
         title.add("作者");
         title.add("出版社");
         title.add("出版日期");
-        data=DBCon.queryData("Select * from BookInfo");
+        data=DBCon.queryData("Select * from Book");
         dtm.setDataVector(data,title);
     }
     public void clearAll(){
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jRadioButton1.setSelected(true);
+        ID.setText("");
+        name.setText("");
+        author.setText("");
+        in.setSelected(true);
     }
     public void lock(){
-        jTextField1.setEnabled(false);
-        jTextField2.setEnabled(false);
-        jTextField3.setEnabled(false);
-        jRadioButton1.setEnabled(false);
-        jRadioButton2.setEnabled(false);
-        jButton1.setEnabled(true);
+        ID.setEnabled(false);
+        name.setEnabled(false);
+        author.setEnabled(false);
+        press.setEnabled(false);
+        pressdate.setEnabled(false);
+        in.setEnabled(false);
+        out.setEnabled(false);
         jButton2.setEnabled(true);
         jButton3.setEnabled(true);
-        jButton4.setEnabled(true);
-        jButton5.setEnabled(true);
-        jButton6.setEnabled(true);
-        jButton7.setEnabled(true);
-        jButton8.setEnabled(false);
+        Add.setEnabled(true);
+        Edit.setEnabled(true);
+        Delete.setEnabled(true);
+        Save.setEnabled(false);
     }
         public void unlock(){
-        jTextField1.setEnabled(true);
-        jTextField2.setEnabled(true);
-        jTextField3.setEnabled(true);
-        jRadioButton1.setEnabled(true);
-        jRadioButton2.setEnabled(true);
-        jButton1.setEnabled(false);
+        ID.setEnabled(true);
+        name.setEnabled(true);
+        author.setEnabled(true);
+        press.setEnabled(true);
+        pressdate.setEnabled(true);
+        in.setEnabled(true);
+        out.setEnabled(true);
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
-        jButton4.setEnabled(false);
-        jButton5.setEnabled(false);
-        jButton6.setEnabled(false);
-        jButton7.setEnabled(false);
-        jButton8.setEnabled(true);
+        Add.setEnabled(false);
+        Edit.setEnabled(false);
+        Delete.setEnabled(false);
+        Save.setEnabled(true);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -118,26 +130,24 @@ public void showTableData(){
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        ID = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        name = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        author = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        press = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        pressdate = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        in = new javax.swing.JRadioButton();
+        out = new javax.swing.JRadioButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        Add = new javax.swing.JButton();
+        Edit = new javax.swing.JButton();
+        Delete = new javax.swing.JButton();
+        Save = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -154,18 +164,11 @@ public void showTableData(){
 
         jLabel6.setText("状态:");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("在库");
+        buttonGroup1.add(in);
+        in.setText("在库");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("借出");
-
-        jButton1.setLabel("<<");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        buttonGroup1.add(out);
+        out.setText("借出");
 
         jButton2.setLabel("<");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -181,38 +184,31 @@ public void showTableData(){
             }
         });
 
-        jButton4.setLabel(">>");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Add.setText("添加");
+        Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                AddActionPerformed(evt);
             }
         });
 
-        jButton5.setText("添加");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        Edit.setText("修改");
+        Edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                EditActionPerformed(evt);
             }
         });
 
-        jButton6.setText("修改");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        Delete.setText("删除");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                DeleteActionPerformed(evt);
             }
         });
 
-        jButton7.setText("删除");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        Save.setText("保存");
+        Save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        jButton8.setText("保存");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                SaveActionPerformed(evt);
             }
         });
 
@@ -224,20 +220,20 @@ public void showTableData(){
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField3)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))))
-                        .addGap(43, 43, 43)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(author, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(pressdate, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(9, 9, 9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -245,34 +241,32 @@ public void showTableData(){
                                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2)
-                                    .addComponent(jTextField4)))
+                                    .addComponent(name)
+                                    .addComponent(press)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton2)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton5)
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(in)
                                 .addGap(28, 28, 28)
-                                .addComponent(jButton6)
-                                .addGap(21, 21, 21)
-                                .addComponent(jButton7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton8)))
-                        .addGap(0, 100, Short.MAX_VALUE)))
+                                .addComponent(out)
+                                .addGap(84, 84, 84))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(54, 54, 54)
+                                    .addComponent(jButton2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jButton3))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(Add)
+                                    .addGap(28, 28, 28)
+                                    .addComponent(Edit)
+                                    .addGap(21, 21, 21)
+                                    .addComponent(Delete)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(Save))))
+                        .addGap(0, 237, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -281,46 +275,38 @@ public void showTableData(){
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(author, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(press, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pressdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(out)
+                    .addComponent(in))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7)
-                    .addComponent(jButton8))
-                .addContainerGap(125, Short.MAX_VALUE))
+                    .addComponent(Add)
+                    .addComponent(Edit)
+                    .addComponent(Delete)
+                    .addComponent(Save))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        unlock();
-        type=2;
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -336,50 +322,45 @@ public void showTableData(){
             showTextFieldData(index);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
-        index=data.size()-1;
-        showTextFieldData(index);
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        unlock();
         clearAll();
-        unlock();
         type=1;
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_AddActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
         // TODO add your handling code here:
-        unlock();
-        type=2;
-    }//GEN-LAST:event_jButton6ActionPerformed
+       unlock();
+       ID.setEnabled(false);
+       type = 2;
+    }//GEN-LAST:event_EditActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
         if(JOptionPane.showConfirmDialog(null,"你确定要删除该数据吗？","确认删除",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION){
-            String BookID=jTextField1.getText();
+            String BookID=ID.getText();
             String sql="delete from BookInfo where BookID='"+BookID+"'";
             if(DBCon.updateData(sql)){
-                data=DBCon.queryData("Select * from BookInfo");
+                data=DBCon.queryData("Select * from Book");
                 dtm.setDataVector(data,title);
                 JOptionPane.showMessageDialog(null,"删除数据成功!","警告", JOptionPane.INFORMATION_MESSAGE);
                 showTextFieldData(0);
             }
         }
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_DeleteActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         // TODO add your handling code here:
-        String BookID=jTextField1.getText();
-        String BookName=jTextField2.getText();
-        String Author=jTextField3.getText();
-        String Press=jTextField4.getText();
-        String PressDate=jTextField5.getText();
+        String BookID=ID.getText();
+        String BookName=name.getText();
+        String Author=author.getText();
+        String Press=press.getText();
+        String PressDate=pressdate.getText();
         String Status="";
-        if(jRadioButton1.isSelected()){
+        if(in.isSelected()){
             Status="在库";
-        }else if(jRadioButton2.isSelected()){
+        }else if(out.isSelected()){
             Status="借出";
         }
         String sql="";
@@ -395,12 +376,12 @@ public void showTableData(){
         }
                 
         if(DBCon.updateData(sql)){
-            data=DBCon.queryData("Select * from Student");
+            data=DBCon.queryData("Select * from Book");
             dtm.setDataVector(data,title);
             lock();
             JOptionPane.showMessageDialog(null,"保存数据成功!","警告", JOptionPane.INFORMATION_MESSAGE);
         }
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_SaveActionPerformed
 
     
     
@@ -442,27 +423,25 @@ public void showTableData(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Add;
+    private javax.swing.JButton Delete;
+    private javax.swing.JButton Edit;
+    private javax.swing.JTextField ID;
+    private javax.swing.JButton Save;
+    private javax.swing.JTextField author;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JRadioButton in;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField name;
+    private javax.swing.JRadioButton out;
+    private javax.swing.JTextField press;
+    private javax.swing.JTextField pressdate;
     // End of variables declaration//GEN-END:variables
 }
